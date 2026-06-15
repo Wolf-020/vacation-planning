@@ -15,7 +15,7 @@
   --sh-lg:0 20px 60px rgba(0,0,0,.15);
   --r1:12px;--r2:18px;--r3:24px
 }
-html{scroll-behavior:smooth}
+html{scroll-behavior:auto}
 body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;
   background:var(--s2);color:var(--t1);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
@@ -639,14 +639,28 @@ document.querySelectorAll('.reveal').forEach((el, i) => {
   io.observe(el);
 });
 
-// Smooth nav link scrolling
+// Smooth scroll — rAF-based so it works on all iOS versions
+function smoothScrollTo(targetY, duration) {
+  const startY = window.pageYOffset;
+  const dist = targetY - startY;
+  let startTime = null;
+  function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+  function step(now) {
+    if (!startTime) startTime = now;
+    const elapsed = Math.min((now - startTime) / duration, 1);
+    window.scrollTo(0, startY + dist * ease(elapsed));
+    if (elapsed < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const target = document.querySelector(a.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    if (!target) return;
+    e.preventDefault();
+    const y = target.getBoundingClientRect().top + window.pageYOffset;
+    smoothScrollTo(y, 650);
   });
 });
 </script>

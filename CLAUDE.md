@@ -27,6 +27,8 @@ git push
 
 ## Git workflow
 
+**Commit and push after every meaningful unit of work** — do not batch multiple unrelated changes into one commit. The goal is that the GitHub remote always reflects the current state so no work is ever lost.
+
 Always stage specific files, never `git add .`:
 ```
 git add index.html
@@ -35,6 +37,8 @@ git push
 ```
 
 Commit prefix conventions: `feat:` new content/feature, `update:` changes to existing content, `fix:` corrections, `chore:` non-content changes (renaming, config).
+
+Commit at minimum after each of these: adding a new section or destination, updating itinerary content, changing styles or layout, fixing links or copy, and any structural refactor. When in doubt, commit.
 
 ## Architecture of index.html
 

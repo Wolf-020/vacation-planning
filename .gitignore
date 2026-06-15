@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Scratch / editor files
+Untitled
+*.tmp
+*.bak
+
+# Node (if tooling is added later)
+node_modules/
